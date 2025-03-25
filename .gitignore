@@ -1,0 +1,16 @@
+/*.http
+.idea/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.whl
+
+
+*.venv
+*.env
+!.env.example
+# Dependency files
+/uv.lock
+/http-client.private.env.json

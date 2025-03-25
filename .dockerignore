@@ -1,0 +1,81 @@
+# Development and Version Control Directories
+.git/
+.gitignore
+.github/
+.gitlab-ci.yml
+
+# Dependency Directories
+node_modules/
+bower_components/
+vendor/
+__pycache__/
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Build and Compilation Outputs
+*.pyc
+*.pyo
+*.pyd
+*.class
+*.dll
+*.exe
+*.o
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs and Databases
+*.log
+*.sqlite
+*.sqlite3
+logs/
+*.pid
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local Development Configuration
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Large and Unnecessary Files
+*.md
+README*
+CHANGELOG*
+TEST*
+CONTRIBUTING*
+.editorconfig
+.eslintrc*
+.prettierrc*
+*.md
+*.txt
+*.yml
+*.yaml
+
+# Security and Sensitive Information
+*.key
+*.pem
+*.crt
+id_rsa*
+
+# Backup and Temporary Files
+*~
+.tmp/
+.temp/
+*.bak
+.backups/
