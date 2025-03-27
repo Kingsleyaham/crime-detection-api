@@ -12,3 +12,8 @@ class UserAlreadyExists(AppException):
 class UserNotFoundException(AppException):
     def __init__(self):
         super().__init__("User not found", 404)
+
+
+class IncorrectCredentialsException(AppException):
+    def __init__(self, message: str = "Incorrect credentials"):
+        super().__init__(message, 401)

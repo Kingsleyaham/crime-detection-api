@@ -63,14 +63,17 @@ class UserResponse(BaseModel):
     # This allows direct conversion from SQLModel User to this Pydantic model
     model_config = ConfigDict(from_attributes=True)
 
-class SignupResponse(ResponseModel):
+class SignupResponse(BaseModel):
     """
     Response schema for successful signup
     """
-    data: UserResponse
-    access_token: str
+    success: bool = True
+    user: UserResponse
+    message: str | None = None
 
 class LoginResponse(BaseModel):
     """Response schema for successful login"""
-    data: UserResponse
+    success: bool = True
+    user: UserResponse
     access_token: str
+    token_type: str

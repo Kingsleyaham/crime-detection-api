@@ -1,8 +1,9 @@
 from sqlmodel import Session, select
 
+from app.constants.messages import MESSAGE
 from app.core.exceptions import UserAlreadyExists
 from app.models.user import User
-from app.schemas.user import UserCreate, UserResponse
+from app.schemas.user import UserCreate, UserResponse, SignupResponse
 from app.utils.password import get_password_hash
 
 
@@ -24,7 +25,10 @@ class UserService:
         db.refresh(user)
 
         # return UserResponse.model_validate(user)
-        return user
+        return SignupResponse(
+            user=user,
+            message=MESSAGE.USER_CREATED
+        )
 
     @staticmethod
     async def get_user_by_email(db: Session, email: str) -> User:

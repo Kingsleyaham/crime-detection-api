@@ -4,6 +4,7 @@ class MESSAGE(str, Enum):
     CREATED = 'Resource created successfully'
     UPDATED = 'Resource updated successfully'
     DELETED = 'Resource deleted successfully'
+    USER_CREATED = 'User created successfully'
 
     # Error messages
     USER_NOT_FOUND = 'User not found'

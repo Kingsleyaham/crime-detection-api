@@ -12,6 +12,7 @@ from app.core.database import create_db_and_tables
 from app.core.exceptions import AppException
 from app.api.routers import router as api_router
 from app.middlewares.authenticate import authenticate
+from app.middlewares.success_response import success_response_middleware
 
 
 @asynccontextmanager
@@ -37,8 +38,14 @@ if settings.CORS_ORIGINS:
 
 # logging.basicConfig(level=logging.ERROR)
 
+# @app.middleware('http')
+# async def apply_wrapping(request: Request, call_next):
+#     return await success_response_middleware(request, call_next)
+
+
 # set up routes
 app.include_router(api_router, prefix=settings.API_VERSION)
+
 
 #
 # @app.middleware('http')
@@ -47,13 +54,14 @@ app.include_router(api_router, prefix=settings.API_VERSION)
 #     return response
 
 
+
 # Global error handler for unexpected errors
 @app.exception_handler(AppException)
 async def app_exception_handler(request: Request, exc: AppException):
     logging.error(f"unhandled error: {exc}")
     return JSONResponse(
         status_code=exc.status_code if exc.status_code else http.HTTPStatus.INTERNAL_SERVER_ERROR,
-        content={"error": exc.message if exc.message else "Internal server error"},
+        content={"success": False, "error": exc.message if exc.message else "Internal server error"},
     )
 
 
