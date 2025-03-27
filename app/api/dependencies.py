@@ -6,21 +6,26 @@ from sqlmodel import Session, select
 
 import jwt
 from app.api.services.auth_service import  ALGORITHM
+from app.constants.messages import MESSAGE
 from app.core.config import settings
 from app.core.database import get_session
 from app.schemas.auth import TokenData
+from app.models.user import User
 from fastapi import Request
 
+from app.schemas.user import UserResponse
 from app.utils.helpers import extract_bearer_token
 
 
 def get_token(request: Request):
     header = request.headers.get("Authorization")
-    token = extract_bearer_token(header)
-    return token
+    if header:
+        token = extract_bearer_token(header)
+        return token
+    return ""
 
 async def get_current_user(token: Annotated[str, Depends(get_token)], db: Session = Depends(get_session)):
-    credential_exception = HTTPException(status_code=401, detail="Could not validate credentials",
+    credential_exception = HTTPException(status_code=401, detail=MESSAGE.INVALID_TOKEN,
                                          headers={"WWW-Authenticate": "Bearer"})
 
     try:
@@ -35,4 +40,4 @@ async def get_current_user(token: Annotated[str, Depends(get_token)], db: Sessio
     if not user:
         raise credential_exception
 
-    return user
+    return UserResponse(user=user)

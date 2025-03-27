@@ -45,10 +45,11 @@ class UserUpdate(BaseModel):
 class UserLogin(BaseUser):
     pass
 
-class UserResponse(BaseModel):
+
+class BaseUserResponse(BaseModel):
     """
-    Standard user response schema excluding sensitive information
-    """
+       Standard user response schema excluding sensitive information
+       """
     id: uuid.UUID
     email: EmailStr
     firstname: str | None = None
@@ -63,17 +64,18 @@ class UserResponse(BaseModel):
     # This allows direct conversion from SQLModel User to this Pydantic model
     model_config = ConfigDict(from_attributes=True)
 
-class SignupResponse(BaseModel):
+
+class UserResponse(BaseModel):
+    success: bool = True
+    user: BaseUserResponse
+
+class SignupResponse(UserResponse):
     """
     Response schema for successful signup
     """
-    success: bool = True
-    user: UserResponse
     message: str | None = None
 
-class LoginResponse(BaseModel):
+class LoginResponse(UserResponse):
     """Response schema for successful login"""
-    success: bool = True
-    user: UserResponse
     access_token: str
     token_type: str

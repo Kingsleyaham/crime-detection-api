@@ -9,7 +9,8 @@ from app.api.services.user_service import UserService
 from app.core.database import get_session
 from app.models.user import User
 from app.api.dependencies import get_current_user
-from app.schemas.user import UserCreate, LoginResponse, UserLogin, SignupResponse
+from app.schemas.user import UserCreate, LoginResponse, UserLogin, SignupResponse, UserResponse
+from app.api.services.auth_service import CurrentUserToken
 
 router = APIRouter()
 
@@ -24,6 +25,6 @@ async def login(user_data: UserLogin, db: Session = Depends(get_session)):
     return await AuthService.login(db, user_data)
 
 
-@router.get("/users/me")
-async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
+@router.get("/users/me", response_model=UserResponse, status_code=200,)
+async def read_users_me(current_user: Annotated[User, Depends(get_current_user)], token: CurrentUserToken):
     return current_user
