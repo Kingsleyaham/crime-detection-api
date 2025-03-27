@@ -3,6 +3,9 @@ class AppException(Exception):
         self.message = message
         self.status_code = status_code
 
+class NotFoundException(AppException):
+    def __init__(self, message: str = "Resource not found"):
+        super().__init__(message, 404)
 
 class UserAlreadyExists(AppException):
     def __init__(self):

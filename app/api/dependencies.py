@@ -40,4 +40,7 @@ async def get_current_user(token: Annotated[str, Depends(get_token)], db: Sessio
     if not user:
         raise credential_exception
 
-    return UserResponse(user=user)
+    return user
+
+
+CurrentUserDep = Annotated[User, Depends(get_current_user)]
