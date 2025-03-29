@@ -15,3 +15,4 @@ class MESSAGE(str, Enum):
     INVALID_TOKEN = 'Invalid access token'
     CANNOT_UPDATE_APPROVED_SHIFT = 'You cannot update approved shift'
     SHIFT_TIME_CONFLICT = 'Shift time conflict'
+    INVALID_FILE_TYPE = 'Invalid file type. please upload a video.'

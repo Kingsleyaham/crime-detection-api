@@ -1,18 +1,15 @@
-import logging
 import http
+import logging
 from contextlib import asynccontextmanager
-from typing import Callable
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from app.api.routers import router as api_router
 from app.core.config import settings
 from app.core.database import create_db_and_tables
 from app.core.exceptions import AppException
-from app.api.routers import router as api_router
-from app.middlewares.authenticate import authenticate
-from app.middlewares.success_response import success_response_middleware
 
 
 @asynccontextmanager
@@ -52,6 +49,7 @@ app.include_router(api_router, prefix=settings.API_VERSION)
 # async def authenticate_middleware(request: Request, call_next: Callable):
 #     response = await authenticate(request, call_next)
 #     return response
+
 
 
 
