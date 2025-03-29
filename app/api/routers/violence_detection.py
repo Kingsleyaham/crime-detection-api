@@ -5,6 +5,7 @@ from typing import Any
 import cv2
 from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException
 
+from app.api.services.auth_service import CurrentUserToken
 from app.api.services.violence_detection_service import ViolenceDetectionService
 
 router = APIRouter()
@@ -15,8 +16,8 @@ def get_service():
     return ViolenceDetectionService()
 
 
-@router.post("/video", response_model=dict[str, list[dict[str, Any]]])
-async def detect_violence_from_video(file: UploadFile = File(...), confidence: float | None = Form(0.25),
+@router.post("/video", response_model=dict[str, list[dict[str, Any]]], status_code=200)
+async def detect_violence_from_video(token: CurrentUserToken, file: UploadFile = File(...), confidence: float | None = Form(0.25),
                                      service: ViolenceDetectionService = Depends(get_service)):
     """
        Detect violence/crime in a video file.
@@ -60,8 +61,9 @@ async def detect_violence_from_video(file: UploadFile = File(...), confidence: f
         os.unlink(temp_file.name)
 
 
-@router.post("/image", response_model=dict[str, Any])
+@router.post("/image", response_model=dict[str, Any], status_code=200)
 async def detect_from_image(
+token: CurrentUserToken,
         file: UploadFile = File(...),
         confidence: float | None = Form(0.25),
         service: ViolenceDetectionService = Depends(get_service)
