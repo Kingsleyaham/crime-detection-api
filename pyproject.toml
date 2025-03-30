@@ -47,6 +47,7 @@ dependencies = [
     "torchvision>=0.21.0",
     "typer==0.15.2",
     "typing-extensions==4.12.2",
+    "ultralytics>=8.3.98",
     "uvicorn==0.34.0",
     "uvloop==0.21.0",
     "watchfiles==1.0.4",

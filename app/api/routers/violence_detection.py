@@ -63,7 +63,6 @@ async def detect_violence_from_video(token: CurrentUserToken, file: UploadFile =
 
 @router.post("/image", response_model=dict[str, Any], status_code=200)
 async def detect_from_image(
-token: CurrentUserToken,
         file: UploadFile = File(...),
         confidence: float | None = Form(0.25),
         service: ViolenceDetectionService = Depends(get_service)

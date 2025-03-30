@@ -1,9 +1,7 @@
-import http
 import uuid
 from datetime import datetime
 from http import HTTPStatus
 
-from dns.resolver import query
 from sqlmodel import Session, select
 
 from app.constants.messages import MESSAGE
@@ -46,6 +44,9 @@ class ShiftService:
     async def get_shift(db: Session, user_id: uuid.UUID, shift_id: uuid.UUID):
         query = select(Shift).where((Shift.user_id == user_id) & (Shift.id == shift_id))
         result = db.exec(query).first()
+
+        if not result:
+            raise NotFoundException(MESSAGE.SHIFT_NOT_FOUND)
 
         return ShiftResponse(success=True, data=result)
 

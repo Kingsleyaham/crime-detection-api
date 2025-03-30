@@ -5,6 +5,10 @@ class MESSAGE(str, Enum):
     UPDATED = 'Resource updated successfully'
     DELETED = 'Resource deleted successfully'
     USER_CREATED = 'User created successfully'
+    NOTIFICATION_CREATED = 'Notification created successfully'
+    NOTIFICATION_UPDATED = 'Notification updated successfully'
+    NOTIFICATION_NOT_FOUND = 'Notification not found'
+    NOTIFICATION_MARKED_AS_READ = 'Notification marked as read'
 
     # Error messages
     USER_NOT_FOUND = 'User not found'
