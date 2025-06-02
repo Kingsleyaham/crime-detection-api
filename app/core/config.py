@@ -9,6 +9,7 @@ class Settings (BaseSettings):
     # Get database_url from docker compose
     # DATABASE_URL: str = os.getenv('DATABASE_URL')
     DATABASE_URL: str
+    HUGGING_REPO_ID:str
     POSTGRES_DB: str
     POSTGRES_USER:str
     POSTGRES_PASSWORD: str

@@ -4,11 +4,14 @@ from typing import Any
 import cv2
 import numpy as np
 import torch
+from huggingface_hub import hf_hub_download
 from ultralytics import YOLO
+
+from app.core.config import settings
 
 
 class ViolenceDetectionService:
-    def __init__(self,model_path: str = None):
+    def __init__(self,model_path: str = None, use_huggingface:bool = True):
         """
         Initialize teh violence detection service with the YOLO model.
 
@@ -16,8 +19,11 @@ class ViolenceDetectionService:
             model_path: Path to the YOLO model (optional).
         """
         if model_path is None:
-            base_path = pathlib.Path(__file__).parent.parent.parent.parent
-            model_path =str(base_path / "data" / "best.pt")
+            if use_huggingface:
+                model_path = self._download_from_huggingface()
+            else:
+                base_path = pathlib.Path(__file__).parent.parent.parent.parent
+                model_path =str(base_path / "data" / "best.pt")
 
         # Use GPU if available
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -34,6 +40,18 @@ class ViolenceDetectionService:
         # Move model to appropriate device
         if hasattr(self.model, 'to'):
             self.model = self.model.to(self.device)
+
+    def _download_from_huggingface(self) -> str:
+        """Download the model from HuggingFace repository"""
+        try:
+            print("Downloading model from HuggingFace...")
+            model_path = hf_hub_download(repo_id=settings.HUGGING_REPO_ID, filename="best.pt", cache_dir="../models")
+
+            print(f"Model downloaded to: {model_path}")
+            return model_path
+        except Exception as e:
+            print(f"Error downloading from HuggingFace: {str(e)}")
+            raise RuntimeError(f"Failed to download model from HuggingFace: {e}")
 
     def _load_model(self, model_path: str):
         """Load the YOLOv8 model."""
