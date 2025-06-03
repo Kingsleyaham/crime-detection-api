@@ -10,11 +10,6 @@ class Settings (BaseSettings):
     # DATABASE_URL: str = os.getenv('DATABASE_URL')
     DATABASE_URL: str
     HUGGING_REPO_ID:str
-    POSTGRES_DB: str
-    POSTGRES_USER:str
-    POSTGRES_PASSWORD: str
-    HOST_POSTGRES_PORT: int
-    POSTGRES_HOST: str
     SECRET_KEY: str = ''
     # SECRET_KEY: str = os.getenv('SECRET_KEY')
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
